@@ -49,6 +49,8 @@ This service will filter out <http://redpencil.data.gift/vocabularies/tasks/Task
 
 - HIGH_LOAD_DATABASE_ENDPOINT: (default: `http://virtuoso:8890/sparql`) endpoint to use for most file related queries (avoids delta overhead)
 - MAX_DAYS_TO_KEEP_SUCCESSFUL_JOBS: (default: 30) number of days to keep successful jobs
+- MAX_DAYS_TO_KEEP_BUSY_JOBS: (default: 7) number of days to keep busy jobs
+- MAX_DAYS_TO_KEEP_FAILED_JOBS: (default: 7) number of days to keep failed jobs
 - DEFAULT_GRAPH: (default: "http://mu.semte.ch/graphs/harvesting") the default graph where jobs triples are stored
 
 ## REST API

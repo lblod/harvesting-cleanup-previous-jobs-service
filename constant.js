@@ -36,5 +36,11 @@ export const HIGH_LOAD_DATABASE_ENDPOINT =
 export const MAX_DAYS_TO_KEEP_SUCCESSFUL_JOBS =
   process.env.MAX_DAYS_TO_KEEP_SUCCESSFUL_JOBS || 30;
 
+export const MAX_DAYS_TO_KEEP_BUSY_JOBS =
+  process.env.MAX_DAYS_TO_KEEP_BUSY_JOBS || 7;
+
+export const MAX_DAYS_TO_KEEP_FAILED_JOBS =
+  process.env.MAX_DAYS_TO_KEEP_FAILED_JOBS || 7;
+
 export const DEFAULT_GRAPH =
   process.env.DEFAULT_GRAPH || "http://mu.semte.ch/graphs/harvesting";

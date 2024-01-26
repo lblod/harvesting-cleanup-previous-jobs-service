@@ -4,7 +4,7 @@
   "description": "Microservice that cleanups old harvesting jobs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lblod/harvesting-cleaning-service.git"
+    "url": "git+https://github.com/lblod/harvesting-cleanup-previous-jobs-service.git"
   },
   "author": "redpencil.io",
   "license": "MIT",

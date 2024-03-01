@@ -1,6 +1,6 @@
 {
   "name": "harvesting-cleaning-service",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Microservice that cleanups old harvesting jobs",
   "repository": {
     "type": "git",

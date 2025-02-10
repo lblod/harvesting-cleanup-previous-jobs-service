@@ -53,6 +53,39 @@ This service will filter out <http://redpencil.data.gift/vocabularies/tasks/Task
 - MAX_DAYS_TO_KEEP_FAILED_JOBS: (default: 7) number of days to keep failed jobs
 - DEFAULT_GRAPH: (default: "http://mu.semte.ch/graphs/harvesting") the default graph where jobs triples are stored
 
+### Scope the cleanup to specific operations
+
+By default all jobs are cleaned up - including the jobs from this service. To filter on specific operations, add them to your project `config/cleaning/config.json` e.g.:
+
+```
+{
+  "operations": [
+    "http://lblod.data.gift/id/jobs/concept/TaskOperation/cleaning",
+    "http://lblod.data.gift/id/jobs/concept/TaskOperation/harvesting"
+  ]
+}
+```
+
+And mount the config directory in the docker-compose.yml:
+
+```
+services:
+  harvesting-cleaning:
+    image: lblod/harvesting-cleanup-previous-jobs-service
+    volumes:
+      - ./data/files:/share
+      - ./config/cleaning:/config
+```
+
+Operations are defined as:
+
+```
+PREFIX tasks: <http://redpencil.data.gift/vocabularies/tasks/>
+?job
+  a tasks:Task ;
+  tasks:operation ?operation .
+```
+
 ## REST API
 
 ### POST /delta

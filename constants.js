@@ -44,3 +44,15 @@ export const MAX_DAYS_TO_KEEP_FAILED_JOBS =
 
 export const DEFAULT_GRAPH =
   process.env.DEFAULT_GRAPH || "http://mu.semte.ch/graphs/harvesting";
+
+let operations = [];
+try {
+  const config = JSON.parse(fs.readFileSync("/config/config.json", "utf8"));
+  operations = config.operations || [];
+} catch (error) {
+  console.log("No operations specified in /config/config.json. ALL operations will be cleaned up.");
+}
+
+export const OPERATIONS = operations;
+
+

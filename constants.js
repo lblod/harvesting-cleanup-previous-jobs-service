@@ -1,3 +1,5 @@
+import fs from "fs";
+
 export const TASK_HARVESTING_CLEANING =
   "http://lblod.data.gift/id/jobs/concept/TaskOperation/cleaning";
 
@@ -46,13 +48,24 @@ export const DEFAULT_GRAPH =
   process.env.DEFAULT_GRAPH || "http://mu.semte.ch/graphs/harvesting";
 
 let operations = [];
+const dumpFileOperationsDefault = [
+  "http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/deltaDumpFileCreation/besluiten",
+  "http://redpencil.data.gift/id/jobs/concept/TaskOperation/deltas/deltaDumpFileCreation",
+  "http://redpencil.data.gift/id/jobs/concept/TaskOperation/deltas/initialPublicationGraphSyncing",
+  "http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/initialPublicationGraphSyncing/besluiten",
+  "http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/deltaDumpFileCreation/verenigingen"
+];
+let dumpFileOperations = dumpFileOperationsDefault
 try {
   const config = JSON.parse(fs.readFileSync("/config/config.json", "utf8"));
   operations = config.operations || [];
+  dumpFileOperations = config.dumpFileOperations || dumpFileOperationsDefault;
 } catch (error) {
+  console.error("Error reading /config/config.json:", error);
   console.log("No operations specified in /config/config.json. ALL operations will be cleaned up.");
 }
 
 export const OPERATIONS = operations;
+export const DUMP_FILE_OPERATIONS = dumpFileOperations;
 
 

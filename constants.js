@@ -47,25 +47,15 @@ export const MAX_DAYS_TO_KEEP_FAILED_JOBS =
 export const DEFAULT_GRAPH =
   process.env.DEFAULT_GRAPH || "http://mu.semte.ch/graphs/harvesting";
 
-let operations = [];
-const dumpFileOperationsDefault = [
-  "http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/deltaDumpFileCreation/besluiten",
-  "http://redpencil.data.gift/id/jobs/concept/TaskOperation/deltas/deltaDumpFileCreation",
-  "http://redpencil.data.gift/id/jobs/concept/TaskOperation/deltas/initialPublicationGraphSyncing",
-  "http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/initialPublicationGraphSyncing/besluiten",
-  "http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/deltaDumpFileCreation/verenigingen"
-];
-let dumpFileOperations = dumpFileOperationsDefault
+let jobOperations = [];
 try {
   const config = JSON.parse(fs.readFileSync("/config/config.json", "utf8"));
-  operations = config.operations || [];
-  dumpFileOperations = config.dumpFileOperations || dumpFileOperationsDefault;
+  jobOperations = config.jobOperations || [];
 } catch (error) {
   console.error("Error reading /config/config.json:", error);
-  console.log("No operations specified in /config/config.json. ALL operations will be cleaned up.");
+  console.log("No job operations specified in /config/config.json. ALL job operations will be cleaned up.");
 }
 
-export const OPERATIONS = operations;
-export const DUMP_FILE_OPERATIONS = dumpFileOperations;
+export const JOB_OPERATIONS = jobOperations;
 
 

@@ -1,7 +1,8 @@
 # harvesting-cleaning-service
 
-Microservice that cleans up previous successful jobs (keeps only the most recent successful one );
-It also periodically remove old failed jobs.
+Microservice that cleans up old jobs based on configurable retention periods.
+It removes successful jobs older than the configured threshold and failed jobs older than their configured threshold.
+When cleaning a job, it also deletes all associated files (both physical files on disk and metadata in the database).
 
 ## Installation
 
@@ -47,21 +48,21 @@ This service will filter out <http://redpencil.data.gift/vocabularies/tasks/Task
 
 ### Environment variables
 
-- HIGH_LOAD_DATABASE_ENDPOINT: (default: `http://virtuoso:8890/sparql`) endpoint to use for most file related queries (avoids delta overhead)
-- MAX_DAYS_TO_KEEP_SUCCESSFUL_JOBS: (default: 30) number of days to keep successful jobs
-- MAX_DAYS_TO_KEEP_BUSY_JOBS: (default: 7) number of days to keep busy jobs
-- MAX_DAYS_TO_KEEP_FAILED_JOBS: (default: 7) number of days to keep failed jobs
-- DEFAULT_GRAPH: (default: "http://mu.semte.ch/graphs/harvesting") the default graph where jobs triples are stored
+- `HIGH_LOAD_DATABASE_ENDPOINT`: (default: `http://virtuoso:8890/sparql`) endpoint to use for most file related queries (avoids delta overhead)
+- `MAX_DAYS_TO_KEEP_SUCCESSFUL_JOBS`: (default: 30) number of days to keep successful jobs before they are eligible for deletion
+- `MAX_DAYS_TO_KEEP_BUSY_JOBS`: (default: 7) number of days to keep busy jobs before they are eligible for deletion
+- `MAX_DAYS_TO_KEEP_FAILED_JOBS`: (default: 7) number of days to keep failed jobs before they are eligible for deletion
+- `DEFAULT_GRAPH`: (default: "http://mu.semte.ch/graphs/harvesting") the default graph where job triples are stored
 
-### Scope the cleanup to specific operations
+### Scope the cleanup to specific job operations
 
-By default all jobs are cleaned up - including the jobs from this service. To filter on specific operations, add them to your project `config/cleaning/config.json` e.g.:
+By default, all jobs are cleaned up regardless of their operation. To filter cleanup to specific job operations only, add them to your project `config/cleaning/config.json` e.g.:
 
-```
+```json
 {
-  "operations": [
-    "http://lblod.data.gift/id/jobs/concept/TaskOperation/cleaning",
-    "http://lblod.data.gift/id/jobs/concept/TaskOperation/harvesting"
+  "jobOperations": [
+    "http://lblod.data.gift/id/jobs/concept/JobOperation/harvesting",
+    "http://lblod.data.gift/id/jobs/concept/JobOperation/importing"
   ]
 }
 ```
@@ -77,13 +78,14 @@ services:
       - ./config/cleaning:/config
 ```
 
-Operations are defined as:
+Job operations are defined as:
 
-```
-PREFIX tasks: <http://redpencil.data.gift/vocabularies/tasks/>
+```sparql
+PREFIX task: <http://redpencil.data.gift/vocabularies/tasks/>
+PREFIX cogs: <http://vocab.deri.ie/cogs#>
 ?job
-  a tasks:Task ;
-  tasks:operation ?operation .
+  a cogs:Job ;
+  task:operation ?jobOperation .
 ```
 
 ## REST API

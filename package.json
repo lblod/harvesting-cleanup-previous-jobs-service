@@ -9,8 +9,7 @@
   "author": "redpencil.io",
   "license": "MIT",
   "dependencies": {
-    "@lblod/mu-auth-sudo": "^0.6.1",
-    "lodash.flatten": "^4.4.0"
+    "@lblod/mu-auth-sudo": "^0.6.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

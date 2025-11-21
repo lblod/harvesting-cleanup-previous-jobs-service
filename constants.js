@@ -1,4 +1,4 @@
-import fs from 'fs';
+import config from '/config/config.json' with { type: 'json' };
 
 export const TASK_HARVESTING_CLEANING =
   'http://lblod.data.gift/id/jobs/concept/TaskOperation/cleaning';
@@ -30,6 +30,7 @@ export const PREFIXES = `
   PREFIX cogs: <http://vocab.deri.ie/cogs#>
   PREFIX adms: <http://www.w3.org/ns/adms#>
 `;
+
 export const HIGH_LOAD_DATABASE_ENDPOINT =
   process.env.HIGH_LOAD_DATABASE_ENDPOINT ||
   process.env.VIRTUOSO_ENDPOINT ||
@@ -37,25 +38,12 @@ export const HIGH_LOAD_DATABASE_ENDPOINT =
 
 export const MAX_DAYS_TO_KEEP_SUCCESSFUL_JOBS =
   process.env.MAX_DAYS_TO_KEEP_SUCCESSFUL_JOBS || 30;
-
 export const MAX_DAYS_TO_KEEP_BUSY_JOBS =
   process.env.MAX_DAYS_TO_KEEP_BUSY_JOBS || 7;
-
 export const MAX_DAYS_TO_KEEP_FAILED_JOBS =
   process.env.MAX_DAYS_TO_KEEP_FAILED_JOBS || 7;
 
 export const DEFAULT_GRAPH =
   process.env.DEFAULT_GRAPH || 'http://mu.semte.ch/graphs/harvesting';
 
-let jobOperations = [];
-try {
-  const config = JSON.parse(fs.readFileSync('/config/config.json', 'utf8'));
-  jobOperations = config.jobOperations || [];
-} catch (error) {
-  console.error('Error reading /config/config.json:', error);
-  console.log(
-    'No job operations specified in /config/config.json. ALL job operations will be cleaned up.',
-  );
-}
-
-export const JOB_OPERATIONS = jobOperations;
+export const JOB_OPERATIONS = config.jobOperations;

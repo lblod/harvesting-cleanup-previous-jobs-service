@@ -1,21 +1,21 @@
-import fs from "fs";
+import fs from 'fs';
 
 export const TASK_HARVESTING_CLEANING =
-  "http://lblod.data.gift/id/jobs/concept/TaskOperation/cleaning";
+  'http://lblod.data.gift/id/jobs/concept/TaskOperation/cleaning';
 
 export const STATUS_BUSY =
-  "http://redpencil.data.gift/id/concept/JobStatus/busy";
+  'http://redpencil.data.gift/id/concept/JobStatus/busy';
 export const STATUS_SCHEDULED =
-  "http://redpencil.data.gift/id/concept/JobStatus/scheduled";
+  'http://redpencil.data.gift/id/concept/JobStatus/scheduled';
 export const STATUS_SUCCESS =
-  "http://redpencil.data.gift/id/concept/JobStatus/success";
+  'http://redpencil.data.gift/id/concept/JobStatus/success';
 export const STATUS_FAILED =
-  "http://redpencil.data.gift/id/concept/JobStatus/failed";
+  'http://redpencil.data.gift/id/concept/JobStatus/failed';
 
-export const JOB_TYPE = "http://vocab.deri.ie/cogs#Job";
-export const TASK_TYPE = "http://redpencil.data.gift/vocabularies/tasks/Task";
-export const ERROR_TYPE = "http://open-services.net/ns/core#Error";
-export const ERROR_URI_PREFIX = "http://redpencil.data.gift/id/jobs/error/";
+export const JOB_TYPE = 'http://vocab.deri.ie/cogs#Job';
+export const TASK_TYPE = 'http://redpencil.data.gift/vocabularies/tasks/Task';
+export const ERROR_TYPE = 'http://open-services.net/ns/core#Error';
+export const ERROR_URI_PREFIX = 'http://redpencil.data.gift/id/jobs/error/';
 
 export const PREFIXES = `
   PREFIX harvesting: <http://lblod.data.gift/vocabularies/harvesting/>
@@ -33,7 +33,7 @@ export const PREFIXES = `
 export const HIGH_LOAD_DATABASE_ENDPOINT =
   process.env.HIGH_LOAD_DATABASE_ENDPOINT ||
   process.env.VIRTUOSO_ENDPOINT ||
-  "http://virtuoso:8890/sparql";
+  'http://virtuoso:8890/sparql';
 
 export const MAX_DAYS_TO_KEEP_SUCCESSFUL_JOBS =
   process.env.MAX_DAYS_TO_KEEP_SUCCESSFUL_JOBS || 30;
@@ -45,17 +45,17 @@ export const MAX_DAYS_TO_KEEP_FAILED_JOBS =
   process.env.MAX_DAYS_TO_KEEP_FAILED_JOBS || 7;
 
 export const DEFAULT_GRAPH =
-  process.env.DEFAULT_GRAPH || "http://mu.semte.ch/graphs/harvesting";
+  process.env.DEFAULT_GRAPH || 'http://mu.semte.ch/graphs/harvesting';
 
 let jobOperations = [];
 try {
-  const config = JSON.parse(fs.readFileSync("/config/config.json", "utf8"));
+  const config = JSON.parse(fs.readFileSync('/config/config.json', 'utf8'));
   jobOperations = config.jobOperations || [];
 } catch (error) {
-  console.error("Error reading /config/config.json:", error);
-  console.log("No job operations specified in /config/config.json. ALL job operations will be cleaned up.");
+  console.error('Error reading /config/config.json:', error);
+  console.log(
+    'No job operations specified in /config/config.json. ALL job operations will be cleaned up.',
+  );
 }
 
 export const JOB_OPERATIONS = jobOperations;
-
-

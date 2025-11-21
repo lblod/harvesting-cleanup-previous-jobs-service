@@ -27,7 +27,7 @@ app.post('/delta', async function (req, res, next) {
     );
     if (!entries.length) {
       console.log(
-        'Delta dit not contain potential tasks that are ready for cleaning, awaiting the next batch!',
+        'Delta did not contain potential tasks that are ready for cleaning, awaiting the next batch!',
       );
       return res.status(204).send();
     }

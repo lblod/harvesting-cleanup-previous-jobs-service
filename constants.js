@@ -1,3 +1,4 @@
+import envvar from 'env-var';
 import config from '/config/config.json' with { type: 'json' };
 
 export const TASK_HARVESTING_CLEANING =
@@ -18,10 +19,12 @@ export const ERROR_TYPE = 'http://open-services.net/ns/core#Error';
 export const ERROR_URI_PREFIX = 'http://redpencil.data.gift/id/jobs/error/';
 
 export const PREFIXES = `
+  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   PREFIX harvesting: <http://lblod.data.gift/vocabularies/harvesting/>
   PREFIX terms: <http://purl.org/dc/terms/>
   PREFIX prov: <http://www.w3.org/ns/prov#>
   PREFIX nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>
+  PREFIX nfo: <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#>
   PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
   PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
   PREFIX task: <http://redpencil.data.gift/vocabularies/tasks/>
@@ -31,19 +34,29 @@ export const PREFIXES = `
   PREFIX adms: <http://www.w3.org/ns/adms#>
 `;
 
-export const HIGH_LOAD_DATABASE_ENDPOINT =
-  process.env.HIGH_LOAD_DATABASE_ENDPOINT ||
-  process.env.VIRTUOSO_ENDPOINT ||
-  'http://virtuoso:8890/sparql';
+export const HIGH_LOAD_DATABASE_ENDPOINT = envvar
+  .get('HIGH_LOAD_DATABASE_ENDPOINT')
+  .default('http://virtuoso:8890/sparql')
+  .asString();
 
-export const MAX_DAYS_TO_KEEP_SUCCESSFUL_JOBS =
-  process.env.MAX_DAYS_TO_KEEP_SUCCESSFUL_JOBS || 30;
-export const MAX_DAYS_TO_KEEP_BUSY_JOBS =
-  process.env.MAX_DAYS_TO_KEEP_BUSY_JOBS || 7;
-export const MAX_DAYS_TO_KEEP_FAILED_JOBS =
-  process.env.MAX_DAYS_TO_KEEP_FAILED_JOBS || 7;
+export const MAX_DAYS_TO_KEEP_SUCCESSFUL_JOBS = envvar
+  .get('MAX_DAYS_TO_KEEP_SUCCESSFUL_JOBS')
+  .default(30)
+  .asInt();
 
-export const DEFAULT_GRAPH =
-  process.env.DEFAULT_GRAPH || 'http://mu.semte.ch/graphs/harvesting';
+export const MAX_DAYS_TO_KEEP_BUSY_JOBS = envvar
+  .get('MAX_DAYS_TO_KEEP_BUSY_JOBS')
+  .default(7)
+  .asInt();
+
+export const MAX_DAYS_TO_KEEP_FAILED_JOBS = envvar
+  .get('MAX_DAYS_TO_KEEP_FAILED_JOBS')
+  .default(7)
+  .asInt();
+
+export const DEFAULT_GRAPH = envvar
+  .get('DEFAULT_GRAPH')
+  .default('http://mu.semte.ch/graphs/harvesting')
+  .asString();
 
 export const JOB_OPERATIONS = config.jobOperations;

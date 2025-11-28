@@ -1,7 +1,7 @@
 {
   "name": "harvesting-cleaning-service",
   "version": "0.2.1",
-  "description": "Microservice that cleanups old harvesting jobs",
+  "description": "Microservice that cleans up old harvesting jobs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lblod/harvesting-cleanup-previous-jobs-service.git"
@@ -10,9 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "@lblod/mu-auth-sudo": "^0.6.1",
-    "lodash.flatten": "^4.4.0",
-    "lodash.uniq": "^4.5.0",
-    "lodash.uniqwith": "^4.5.0"
+    "env-var": "^7.5.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
